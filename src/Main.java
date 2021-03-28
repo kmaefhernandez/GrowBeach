@@ -20,7 +20,7 @@ public class Main {
             if (user.createNewFile()) {
                 System.out.println("File created: " + user.getName());
             } else {
-                System.out.println("File already exists.");
+                System.out.println("File already exists");
                 BufferedReader reader = new BufferedReader(new FileReader(user));
                 String line = reader.readLine();
                 while(line != null) {
@@ -31,10 +31,10 @@ public class Main {
                 }
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("** Error Occurred **");
             e.printStackTrace();
         }
-        //new OceanFrame();
+        new OceanFrame();
         new Main().menu();
     }
 //----------------------------------------------------------------------------------------------------------------------
@@ -117,9 +117,9 @@ public class Main {
                 writer.newLine();
             }
             writer.close();
-            System.out.println("Successfully wrote to the file.");
+            System.out.println("Successfully wrote to file");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("** Error Occurred **");
             e.printStackTrace();
         }
     }
