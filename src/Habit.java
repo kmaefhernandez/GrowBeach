@@ -2,9 +2,21 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Habit {
-    String name;
-    String type;
-    boolean dailyCheck;
+    private String name;
+    private String type;
+    private boolean check;
+
+    public Habit() {
+        this.name = "Habit";
+        this.type = "Type";
+        this.check = false;
+    }
+//----------------------------------------------------------------------------------------------------------------------
+    public Habit(String name, String type, boolean check) {
+        this.name = name;
+        this.type = type;
+        this.check = check;
+    }
 //----------------------------------------------------------------------------------------------------------------------
     protected void setName(Scanner in) {
         System.out.println("Habit Name: ");
@@ -49,7 +61,7 @@ public class Habit {
 //----------------------------------------------------------------------------------------------------------------------
     protected String getType() { return type; }
 //----------------------------------------------------------------------------------------------------------------------
-    protected boolean getDaily() { return dailyCheck; }
+    protected boolean getCheck() { return check; }
 //----------------------------------------------------------------------------------------------------------------------
-    protected void record() { dailyCheck = true; }
+    protected void record() { check = true; }
 }
