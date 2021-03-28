@@ -2,16 +2,38 @@
 aquarium as you maintain a healthy work balance
  */
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    int enviroState = 0; // Scale 0-3 with 0 being very dirty and 3 being very clean
-    ArrayList<Habit> userHabits = new ArrayList<>(0); // Collection of user created habits, represented by fish
+    private static File user;
+    // Scale 0-3 with 0 being very dirty and 3 being very clean
+    private static int enviroState = 0;
+    // Collection of user created habits, represented by fish
+    private static ArrayList<Habit> userHabits = new ArrayList<>(0);
 
     public static void main(String[] args) {
-        
+        try {
+            user = new File("user.txt");
+            if (user.createNewFile()) {
+                System.out.println("File created: " + user.getName());
+            } else {
+                System.out.println("File already exists.");
+                BufferedReader reader = new BufferedReader(new FileReader(user));
+                String line = reader.readLine();
+                while(line != null) {
+                    String[] lineArr = line.split(",");
+                    Habit h = new Habit(lineArr[0], lineArr[1], Boolean.getBoolean(lineArr[2]));
+                    userHabits.add(h);
+                    line = reader.readLine();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         //new OceanFrame();
         new Main().menu();
     }
@@ -44,6 +66,7 @@ public class Main {
                         System.out.println("3");
                         break;
                     case 4:
+                        updateFile();
                         System.out.println("Exiting, Goodbye!");
                         valid = false;
                         break;
@@ -62,7 +85,7 @@ public class Main {
     public void recordSelection(Scanner in) {
         int i = 0;
         for (Habit elem : userHabits) {
-            System.out.println(i + ": " + elem.name);
+            System.out.println(i + ": " + elem.getName());
             i++;
         }
         try {
@@ -76,14 +99,28 @@ public class Main {
                 } else {
                     Habit h = userHabits.get(choice);
                     h.record();
-                    System.out.println(h.getName() + " Completed: " + h.getDaily());
-                    enviroState += 1;
+                    System.out.println(h.getName() + " Completed: " + h.getCheck());
                     valid = true;
                 }
             }
         } catch (IndexOutOfBoundsException | InputMismatchException e) {
             System.out.println("** Invalid Input **");
             in.nextLine();
+        }
+    }
+//----------------------------------------------------------------------------------------------------------------------
+    public void updateFile() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("user.txt"));
+            for (Habit elem : userHabits) {
+                writer.write(elem.getName() + "," + elem.getType() + "," + elem.getCheck());
+                writer.newLine();
+            }
+            writer.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
 }
