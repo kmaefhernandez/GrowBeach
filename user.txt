@@ -1,3 +1,1 @@
-Walk,Health,false
-Sleep,Health,false
-Homework,Productivity,false
+Walk,Health,true,Daily,2021-03-29T02:40:13.250960Z
