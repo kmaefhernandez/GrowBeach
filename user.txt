@@ -1,3 +1,4 @@
 Walk,Health,false
 Sleep,Health,false
-Homework,Productivity,true
+Homework,Productivity,false
+Sleep,Health,false
