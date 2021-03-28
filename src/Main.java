@@ -3,6 +3,7 @@ aquarium as you maintain a healthy work balance
  */
 
 import java.io.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -25,7 +26,8 @@ public class Main {
                 String line = reader.readLine();
                 while(line != null) {
                     String[] lineArr = line.split(",");
-                    Habit h = new Habit(lineArr[0], lineArr[1], Boolean.getBoolean(lineArr[2]));
+                    Habit h = new Habit(lineArr[0], lineArr[1], Boolean.getBoolean(lineArr[2]),
+                            lineArr[3], Instant.parse(lineArr[4]));
                     userHabits.add(h);
                     line = reader.readLine();
                 }
@@ -56,6 +58,7 @@ public class Main {
                         Habit habit = new Habit();
                         habit.setName(in);
                         habit.setType(in);
+                        habit.setFrequency(in);
                         userHabits.add(habit);
                         System.out.println(habit.getName() + " Added");
                         break;
@@ -99,7 +102,6 @@ public class Main {
                 } else {
                     Habit h = userHabits.get(choice);
                     h.record();
-                    System.out.println(h.getName() + " Completed: " + h.getCheck());
                     valid = true;
                 }
             }
@@ -113,7 +115,8 @@ public class Main {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("user.txt"));
             for (Habit elem : userHabits) {
-                writer.write(elem.getName() + "," + elem.getType() + "," + elem.getCheck());
+                writer.write(elem.getName() + "," + elem.getType() + "," + elem.getCheck()
+                        + "," + elem.getFrequency() + "," + elem.getEnd());
                 writer.newLine();
             }
             writer.close();
